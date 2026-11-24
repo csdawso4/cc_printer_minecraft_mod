@@ -18,6 +18,9 @@
 		"main": [
 			"com.craigtec.CcPrinter"
 		],
+		"client": [
+			"com.craigtec.CcPrinterClient"
+		],
 		"fabric-datagen": [
 			"com.craigtec.CcPrinterDataGenerator"
 		]
