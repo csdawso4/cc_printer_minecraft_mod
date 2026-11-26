@@ -1,6 +1,6 @@
 package com.craigtec.block;
 
-import com.craigtec.PrintingPressPeripheral;
+import com.craigtec.peripheral.custom.PrintingPressPeripheral;
 import com.craigtec.block.custom.PrintingPressBlock;
 import com.craigtec.block.custom.entity.ModBlockEntities;
 import dan200.computercraft.api.peripheral.PeripheralLookup;

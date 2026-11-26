@@ -1,4 +1,4 @@
-package com.craigtec;
+package com.craigtec.peripheral.custom;
 
 import com.craigtec.block.custom.entity.custom.PrintingPressBlockEntity;
 import dan200.computercraft.api.lua.LuaFunction;

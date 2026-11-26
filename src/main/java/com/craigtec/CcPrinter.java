@@ -3,6 +3,7 @@ package com.craigtec;
 import com.craigtec.block.ModBlocks;
 import com.craigtec.block.custom.entity.ModBlockEntities;
 import com.craigtec.menu.ModMenuTypes;
+import com.craigtec.peripheral.ModPeripherals;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.resources.Identifier;
@@ -23,6 +24,7 @@ public class CcPrinter implements ModInitializer {
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerBlockEntities();
 		ModMenuTypes.registerModMenuTypes();
+		ModPeripherals.registerPeripherals();
 	}
 
 	public static Identifier id(String path) {
