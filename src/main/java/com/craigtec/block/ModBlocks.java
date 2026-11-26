@@ -1,6 +1,9 @@
 package com.craigtec.block;
 
+import com.craigtec.PrintingPressPeripheral;
 import com.craigtec.block.custom.PrintingPressBlock;
+import com.craigtec.block.custom.entity.ModBlockEntities;
+import dan200.computercraft.api.peripheral.PeripheralLookup;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -63,5 +66,7 @@ public class ModBlocks {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> {
             output.accept(PRINTING_PRESS_BLOCK);
         });
+        PeripheralLookup.get().registerForBlockEntity((blockEntity, direction) ->
+                new PrintingPressPeripheral(blockEntity), ModBlockEntities.PRINTING_PRESS_TYPE);
     }
 }

@@ -1,5 +1,6 @@
 package com.craigtec.block.custom.entity.custom;
 
+import com.craigtec.PrintingPressPeripheral;
 import com.craigtec.block.custom.entity.ModBlockEntities;
 import com.craigtec.menu.custom.PrintingPressMenu;
 import net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -32,6 +34,7 @@ import org.jspecify.annotations.Nullable;
 
 public class PrintingPressBlockEntity extends BlockEntity implements ContainerSingleItem.BlockContainerSingleItem, ExtendedMenuProvider<BlockPos> {
     public NonNullList<ItemStack> inventory = NonNullList.withSize(1, ItemStack.EMPTY);
+    protected final PrintingPressPeripheral peripheral = new PrintingPressPeripheral(this);
 
     public PrintingPressBlockEntity(BlockPos worldPosition, BlockState blockState) {
         super(ModBlockEntities.PRINTING_PRESS_TYPE, worldPosition, blockState);
@@ -62,8 +65,12 @@ public class PrintingPressBlockEntity extends BlockEntity implements ContainerSi
         Containers.dropContents(this.level, this.worldPosition, this.inventory);
     }
 
-    /* SAVING DATA */
+    // peripheral related functions
+    public void test() {
+        inventory.set(0, new ItemStack(Items.CHICKEN_SPAWN_EGG, 23));
+    }
 
+    /* SAVING DATA */
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
@@ -77,7 +84,6 @@ public class PrintingPressBlockEntity extends BlockEntity implements ContainerSi
     }
 
     /* BLOCK ENTITY SYNC */
-
     @Override
     public void setChanged() {
         super.setChanged();
@@ -98,7 +104,6 @@ public class PrintingPressBlockEntity extends BlockEntity implements ContainerSi
 
 
     /* MENU */
-
     @Override
     public Component getDisplayName() {
         return Component.translatable("block.cc-printer.printing_press_block");
