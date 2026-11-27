@@ -5,9 +5,7 @@ import com.craigtec.block.custom.entity.ModBlockEntities;
 import com.craigtec.menu.custom.PrintingPressMenu;
 import net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider;
 import net.minecraft.client.data.models.ModelProvider;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
+import net.minecraft.core.*;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +15,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.Filterable;
+import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -27,6 +26,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.LevelEvent;
+import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -39,6 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.craigtec.CcPrinter.MOD_ID;
+import static com.craigtec.block.custom.PrintingPressBlock.FACING;
+import static net.minecraft.core.dispenser.DefaultDispenseItemBehavior.spawnItem;
 
 public class PrintingPressBlockEntity extends RandomizableContainerBlockEntity implements ExtendedMenuProvider<BlockPos> {
     public NonNullList<ItemStack> inventory = NonNullList.withSize(4, ItemStack.EMPTY);
@@ -90,6 +94,7 @@ public class PrintingPressBlockEntity extends RandomizableContainerBlockEntity i
     }
 
     public boolean finishBook(ArrayList<String> pages, String title, String author) {
+        // check if there is leather and string to finish the book
         if (!inventory.get(2).isEmpty() && !inventory.get(3).isEmpty()) {
             safeShrink(2);
             safeShrink(3);
@@ -98,6 +103,7 @@ public class PrintingPressBlockEntity extends RandomizableContainerBlockEntity i
             return false;
         }
 
+        // write the book's data to its item stack
         ItemStack writtenBook = new ItemStack(Items.WRITTEN_BOOK, 1);
         List<Filterable<Component>> filteredPages = pages.stream().map(s -> {
             Filterable<Component> filterable =  Filterable.passThrough(Component.literal(s));
@@ -113,14 +119,20 @@ public class PrintingPressBlockEntity extends RandomizableContainerBlockEntity i
                 )
         ).build();
         writtenBook.applyComponents(components);
-        ItemEntity bookEntity = new ItemEntity(
-                level,
-                worldPosition.getX() + 0.5,
-                worldPosition.getY() + 0.5,
-                worldPosition.getZ() + 0.5,
-                writtenBook
-        );
-        level.addFreshEntity(bookEntity);
+
+        // spawn it in the world using dropper logic
+        Direction direction = level.getBlockState(worldPosition).getValue(FACING);
+        Container into = HopperBlockEntity.getContainerAt(level, worldPosition.relative(direction));
+        if (into == null) {
+            Position position = worldPosition.getCenter().add(0.7 * direction.getStepX(), 0.7 * direction.getStepY(), 0);
+            spawnItem(level, writtenBook, 6, direction, position);
+            // play a sound
+            level.levelEvent(LevelEvent.SOUND_DISPENSER_DISPENSE, worldPosition, 0);
+            // do an animation
+            level.levelEvent(LevelEvent.PARTICLES_SHOOT_SMOKE, worldPosition, direction.get3DDataValue());
+        } else {
+            HopperBlockEntity.addItem(this, into, writtenBook, direction.getOpposite());
+        }
 
         return true;
     }
