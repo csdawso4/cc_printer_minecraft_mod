@@ -70,5 +70,6 @@ public class PrintingPressPeripheral implements IPeripheral {
             throw new LuaException("There is not enough leather or string in the inventory.");
         }
         bookInProgress = false;
+        pages.clear();
     }
 }
