@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class PrintingPressMenu extends AbstractContainerMenu {
@@ -24,10 +25,40 @@ public class PrintingPressMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        addSlot(new Slot(inventory, 0, 80, 35) {
+        addSlot(new Slot(inventory, 0, 44, 35) {
             @Override
-            public int getMaxStackSize() {
-                return 1;
+            public boolean mayPlace(ItemStack itemStack) {
+                if (itemStack.getItem() == Items.PAPER) {
+                    return super.mayPlace(itemStack);
+                }
+                return false;
+            }
+        });
+        addSlot(new Slot(inventory, 1, 62, 35) {
+            @Override
+            public boolean mayPlace(ItemStack itemStack) {
+                if (itemStack.getItem() == Items.INK_SAC) {
+                    return super.mayPlace(itemStack);
+                }
+                return false;
+            }
+        });
+        addSlot(new Slot(inventory, 2, 98, 35) {
+            @Override
+            public boolean mayPlace(ItemStack itemStack) {
+                if (itemStack.getItem() == Items.LEATHER) {
+                    return super.mayPlace(itemStack);
+                }
+                return false;
+            }
+        });
+        addSlot(new Slot(inventory, 3, 116, 35) {
+            @Override
+            public boolean mayPlace(ItemStack itemStack) {
+                if (itemStack.getItem() == Items.STRING) {
+                    return super.mayPlace(itemStack);
+                }
+                return false;
             }
         });
     }
@@ -48,7 +79,7 @@ public class PrintingPressMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 1;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 4;  // must be the number of slots you have!
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);

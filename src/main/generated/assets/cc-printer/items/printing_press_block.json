@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "cc-printer:block/printing_press_block"
+  }
+}
