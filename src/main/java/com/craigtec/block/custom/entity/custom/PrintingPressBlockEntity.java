@@ -64,14 +64,12 @@ public class PrintingPressBlockEntity extends RandomizableContainerBlockEntity i
     }
 
     @Override
-    public void setItem(int slot, ItemStack itemStack) {
+    public boolean canPlaceItem(int slot, ItemStack itemStack) {
         Item item = itemStack.getItem();
-        if (slot == 0 && item == Items.PAPER
+        return slot == 0 && item == Items.PAPER
                 || slot == 1 && item == Items.INK_SAC
                 || slot == 2 && item == Items.LEATHER
-                || slot == 3 && item == Items.STRING) {
-            super.setItem(slot, itemStack);
-        }
+                || slot == 3 && item == Items.STRING;
     }
 
     @Override
