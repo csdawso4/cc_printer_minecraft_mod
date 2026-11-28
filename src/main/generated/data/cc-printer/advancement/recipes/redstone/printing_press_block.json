@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cc-printer:printing_press_block"
+        "recipes": "cc-printer:printing_press_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

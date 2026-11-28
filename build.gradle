@@ -32,7 +32,7 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	implementation "maven.modrinth:gu7yAYhd:P99UehrV"
+	implementation "maven.modrinth:gu7yAYhd:6Vr5Iwam"
 }
 
 processResources {

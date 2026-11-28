@@ -4,6 +4,8 @@ import com.craigtec.block.custom.entity.custom.PrintingPressBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +21,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
 public class PrintingPressBlock extends BaseEntityBlock {
-    private static MapCodec<PrintingPressBlock> CODEC = simpleCodec(PrintingPressBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     public PrintingPressBlock(Properties properties) {
@@ -48,17 +49,12 @@ public class PrintingPressBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
-
-    @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos worldPosition, BlockState blockState) {
         return new PrintingPressBlockEntity(worldPosition, blockState);
     }
 
     @Override
-    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack destroyedWith) {
+    public void playerDestroy(ServerLevel level, ServerPlayer player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack destroyedWith) {
         if (level.getBlockEntity(pos) instanceof PrintingPressBlockEntity printingPressBlockEntity) {
             printingPressBlockEntity.drops();
             level.updateNeighbourForOutputSignal(pos, this);
