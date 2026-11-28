@@ -15,6 +15,6 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider registries) {
-        valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.PRINTING_PRESS_BLOCK);
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.getResourceKey(ModBlocks.PRINTING_PRESS_BLOCK));
     }
 }
