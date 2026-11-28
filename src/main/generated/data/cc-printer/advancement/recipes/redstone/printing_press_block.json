@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_computer_normal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "computercraft:computer_normal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "cc-printer:printing_press_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_computer_normal"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "cc-printer:printing_press_block"
+    ]
+  }
+}

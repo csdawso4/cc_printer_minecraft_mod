@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone",
+    "S": "minecraft:stone"
+  },
+  "pattern": [
+    "SSS",
+    "SRS",
+    "SIS"
+  ],
+  "result": {
+    "id": "cc-printer:printing_press_block"
+  }
+}

@@ -25,7 +25,7 @@ public class ModBlocks {
     public static final Block PRINTING_PRESS_BLOCK = registerBlock(
             "printing_press_block",
             properties -> new PrintingPressBlock(
-                    properties.mapColor(MapColor.STONE).strength(2.0F).sound(SoundType.STONE)
+                    properties.mapColor(MapColor.STONE).strength(3.5F).sound(SoundType.STONE)
             )
     );
 
